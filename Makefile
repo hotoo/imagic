@@ -4,7 +4,8 @@ build-doc:
 	@nico build -C $(THEME)/nico.js
 
 publish-doc: clean build-doc
-	@spm publish --doc _site -s spmjs
+	@ghp-import _site
+	@git push origin gh-pages
 
 server:
 	@nico server -C $(THEME)/nico.js
