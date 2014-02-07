@@ -51,6 +51,10 @@ define(function(require, exports, module){
     on: function(eventName, handler){
       this._evt.on(eventName, handler, this);
       return this;
+    },
+    off: function(eventName, handler){
+      this._evt.off(eventName, handler, this);
+      return this;
     }
   };
   Image.CALLBACK_STATE = {

@@ -47,9 +47,6 @@ seajs.use(["imagic"], function(Image){
 
 字符串(String) 类型，修改 src 成员的值时，模拟发起资源请求。
 
-
-### Events
-
 ### image.onload
 
 模拟请求图片资源成功时，回调 `onload` 方法。
@@ -65,3 +62,31 @@ seajs.use(["imagic"], function(Image){
 模拟图片资源请求取消时，回调 `onabort` 方法。
 
 可以通过设置 `callbackState` 为 `Image.CALLBACK_STATE.ABORT` 模拟。
+
+### image.on(eventName, handler)
+
+指定事件监听方法。
+
+### image.off(eventName, handler)
+
+取消事件监听方法。
+
+## Events
+
+对象使用 `on`, `off` 方法绑定、解绑事件，eventName 支持以下事件类型。
+
+### fetch
+
+模拟发起资源请求前，触发 `fetch` 事件，事件处理函数携带 `src` 参数。
+
+### load
+
+模拟请求资源成功时，触发 `load` 事件。
+
+### error
+
+模拟请求资源成功时，触发 `error` 事件。
+
+### abort
+
+模拟请求资源成功时，触发 `abort` 事件。
