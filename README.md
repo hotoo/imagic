@@ -2,6 +2,10 @@
 
 ---
 
+[![Build Status](https://secure.travis-ci.org/hotoo/imagic.png?branch=master)](https://travis-ci.org/hotoo/imagic)
+[![Coverage Status](https://coveralls.io/repos/hotoo/imagic/badge.png?branch=master)](https://coveralls.io/r/hotoo/imagic)
+
+
 Imagic send data by image, for tests mock.
 
 ---
