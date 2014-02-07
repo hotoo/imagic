@@ -1,0 +1,28 @@
+{
+  "family": "hotoo",
+  "name": "imagic",
+  "version": "1.0.0",
+  "description": "Imagic send data by image, for tests mock.",
+  "homepage": "https://github.com/hotoo/imagic",
+  "author": "闲耘<hotoo.cn@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hotoo/imagic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hotoo/imagic/issues"
+  },
+  "scripts": {
+    "prepublish": "spm build"
+  },
+  "keywords": ["widget"],
+  "licenses": "MIT",
+  "spm": {
+    "output": ["imagic.js"],
+    "alias": {
+      "events": "arale/events/1.1.0/events"
+    },
+    "devAlias": {},
+    "engines": {}
+  }
+}
