@@ -1,13 +1,14 @@
 // Image util for test-case by window.Image send data.
 define(function(require, exports, module){
 
-  var Events = require("events");
-
   // @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objectss#Defining_getters_and_setters
   //      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
   //      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/watch
-  if(!Object.defineProperty){return;}
+  if(typeof Object.defineProperty !== "function"){
+    throw new Error("not support.");
+  }
 
+  var Events = require("events");
   function empty(){}
 
   var LOAD_TIME = 50;
