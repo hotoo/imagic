@@ -17,6 +17,7 @@ define(function(require) {
 
       img.src = URL;
 
+      img.off("fetch");
     });
 
     it('Event load: '+URL, function(done){
