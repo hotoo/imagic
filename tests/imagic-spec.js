@@ -95,8 +95,8 @@ define(function(require) {
     it('Global Image Event load: '+URL, function(done){
       var img = new Image();
 
-      Image.on("load", function(img){
-        expect(img.src).to.equal(URL);
+      Image.on("load", function(src){
+        expect(src).to.equal(URL);
         Image.off("load");
         done();
       });
@@ -108,9 +108,9 @@ define(function(require) {
       var img = new Image();
 
       Image.status = Image.STATUS.ERROR;
-      Image.on("error", function(img){
+      Image.on("error", function(src){
 
-        expect(img.src).to.equal(URL);
+        expect(src).to.equal(URL);
 
         Image.status = Image.STATUS.NULL;
         Image.off("error");
@@ -125,9 +125,9 @@ define(function(require) {
       var img = new Image();
 
       Image.status = Image.STATUS.ABORT;
-      Image.on("abort", function(img){
+      Image.on("abort", function(src){
 
-        expect(img.src).to.equal(URL);
+        expect(src).to.equal(URL);
 
         Image.status = Image.STATUS.NULL;
         Image.off("abort");
