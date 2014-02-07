@@ -20,21 +20,26 @@ define(function(require, exports, module){
     this.height = height;
     var src;
 
-    this.callbackState = DEFAULT_STATE;
+    this.status = DEFAULT_STATE;
     this._evt = new Events();
 
     Object.defineProperty(this, "src", {
       set: function(source){
 
         this._evt.trigger("fetch", source);
+        EVT.trigger("fetch", source);
 
         src = source;
 
         var me = this;
         setTimeout(function(){
 
-          me._evt.trigger(me.callbackState);
-          me["on"+me.callbackState].call(me);
+          var status = Image.status || me.status;
+
+          me._evt.trigger(status);
+          EVT.trigger(status, src);
+
+          me["on"+status].call(me);
 
         }, this.loadTime || LOAD_TIME);
       },
@@ -58,11 +63,26 @@ define(function(require, exports, module){
       return this;
     }
   };
-  Image.CALLBACK_STATE = {
+
+  Image.STATUS = {
     LOAD: "load",
     ERROR: "error",
-    ABORT: "abort"
+    ABORT: "abort",
+    NULL: ""
   };
 
+  Image.status = "";
+
+  var EVT = new Events();
+  Image.on = function(eventName, handler){
+    EVT.on(eventName, handler, Image);
+    return this;
+  };
+  Image.off = function(eventName, handler){
+    EVT.off(eventName, handler, Image);
+    return this;
+  };
+
+  window.Image = Image;
   module.exports = Image;
 });

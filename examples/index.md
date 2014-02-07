@@ -10,13 +10,23 @@ seajs.use('imagic', function(Image){
     console.log("loaded", this.src);
   };
 
-  img.on("fetch", function(src){
-    console.log("fetch", src);
-  }).on("load", function(){
-    console.log("load", this.src);
+  Image.on("fetch", function(src){
+    console.log("global fetch", src);
+    Image.off("fetch");
+  }).on("load", function(src){
+    console.log("global load", src);
+    Image.off("load");
   });
 
-  img.src = "http://www.google.com.hk/logos/doodles/2014/2014-winter-olympics-5710368030588928-hp.jpg";
+  img.on("fetch", function(src){
+    console.log("fetch", src);
+    img.off("fetch");
+  }).on("load", function(){
+    console.log("load", this.src);
+    img.off("load");
+  });
+
+  img.src = "http://www.google.com/logo.png";
 
 });
 ````

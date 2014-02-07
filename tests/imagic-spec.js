@@ -31,7 +31,7 @@ define(function(require) {
 
     it('Event error: '+URL, function(done){
       var img = new Image();
-      img.callbackState = Image.CALLBACK_STATE.ERROR;
+      img.status = Image.STATUS.ERROR;
       img.on("error", function(){
         expect(this.src).to.equal(URL);
         done();
@@ -41,7 +41,7 @@ define(function(require) {
 
     it('Event abort: '+URL, function(done){
       var img = new Image();
-      img.callbackState = Image.CALLBACK_STATE.ABORT;
+      img.status = Image.STATUS.ABORT;
       img.on("abort", function(){
         expect(this.src).to.equal(URL);
         done();
@@ -51,7 +51,7 @@ define(function(require) {
 
     it('onload: '+URL, function(done){
       var img = new Image();
-      img.callbackState = Image.CALLBACK_STATE.LOAD;
+      img.status = Image.STATUS.LOAD;
       img.onload = function(){
         expect(this.src).to.equal(URL);
         done();
@@ -61,7 +61,7 @@ define(function(require) {
 
     it('onerror: '+URL, function(done){
       var img = new Image();
-      img.callbackState = Image.CALLBACK_STATE.ERROR;
+      img.status = Image.STATUS.ERROR;
       img.onerror = function(){
         expect(this.src).to.equal(URL);
         done();
@@ -71,11 +71,70 @@ define(function(require) {
 
     it('onabort: '+URL, function(done){
       var img = new Image();
-      img.callbackState = Image.CALLBACK_STATE.ABORT;
+      img.status = Image.STATUS.ABORT;
       img.onabort = function(){
         expect(this.src).to.equal(URL);
         done();
       };
+      img.src = URL;
+    });
+
+    it('Global Image Event fetch: '+URL, function() {
+
+      var img = new Image(1,1);
+
+      Image.on("fetch", function(src){
+        expect(src).to.equal(URL);
+      });
+
+      img.src = URL;
+
+      Image.off("fetch");
+    });
+
+    it('Global Image Event load: '+URL, function(done){
+      var img = new Image();
+
+      Image.on("load", function(img){
+        expect(img.src).to.equal(URL);
+        Image.off("load");
+        done();
+      });
+
+      img.src = URL;
+    });
+
+    it('Global Image Event error: '+URL, function(done){
+      var img = new Image();
+
+      Image.status = Image.STATUS.ERROR;
+      Image.on("error", function(img){
+
+        expect(img.src).to.equal(URL);
+
+        Image.status = Image.STATUS.NULL;
+        Image.off("error");
+
+        done();
+      });
+
+      img.src = URL;
+    });
+
+    it('Global Image Event abort: '+URL, function(done){
+      var img = new Image();
+
+      Image.status = Image.STATUS.ABORT;
+      Image.on("abort", function(img){
+
+        expect(img.src).to.equal(URL);
+
+        Image.status = Image.STATUS.NULL;
+        Image.off("abort");
+
+        done();
+      });
+
       img.src = URL;
     });
 
