@@ -52,12 +52,16 @@ seajs.use(["imagic"], function(Image){
 
 ### image.onload
 
-请求图片资源成功时，回调 `onload` 方法。
+模拟请求图片资源成功时，回调 `onload` 方法。
 
 ### image.onerror
 
-请求图片资源失败时，回调 `onerror` 方法。
+模拟请求图片资源失败时，回调 `onerror` 方法。
+
+可以通过设置 `callbackState` 为 `Image.CALLBACK_STATE.ERROR` 模拟。
 
 ### image.onabort
 
-图片资源请求取消时，回调 `onabort` 方法。
+模拟图片资源请求取消时，回调 `onabort` 方法。
+
+可以通过设置 `callbackState` 为 `Image.CALLBACK_STATE.ABORT` 模拟。
