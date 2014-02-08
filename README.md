@@ -75,7 +75,7 @@ seajs.use(["imagic", "tracker"], function(Image, Tracker){
 全局的模拟图像事件监听接口。
 所有的模拟图像实例触发的事件，全局图像都会同时触发同样的事件。
 
-事件处理函数 handler 的参数是 image 实例对象。
+事件处理函数 handler 的参数是 src 值。
 
 ### Image.off(eventName, handler)
 
