@@ -3,7 +3,7 @@
 ---
 
 ````javascript
-seajs.use('imagic', function(Image){
+seajs.use('../index', function(Image){
 
   var img = new Image(1,1);
   img.onload = function(){
