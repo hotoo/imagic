@@ -56,6 +56,12 @@ var Image = function(width, height){
 
 };
 
+Image.STATUS = {
+  LOAD: "load",
+  ERROR: "error",
+  ABORT: "abort"
+};
+
 Image.prototype = {
   status: DEFAULT_STATE,
   onload: empty,
@@ -69,12 +75,6 @@ Image.prototype = {
     this._evt.off(eventName, handler, this);
     return this;
   }
-};
-
-Image.STATUS = {
-  LOAD: "load",
-  ERROR: "error",
-  ABORT: "abort"
 };
 
 
