@@ -124,6 +124,42 @@ seajs.use(["imagic", "tracker"], function(Image, Tracker){
 
 取消事件监听方法。
 
+### image.status
+
+可以使用 Image.STATUS 的枚举值：
+
+* `Image.STATUS.LOAD`：测试图片加载成功时，使用这个状态。会触发 load 事件，调用 onload 方法。
+* `Image.STATUS.ERROR`：测试图片加载失败时，使用这个状态，会触发 error 事件，调用 onerror 方法。
+* `Image.STATUS.ABORT`：测试图片请求取消时，使用这个状态，会触发 abort 事件，调用 onabort 方法。
+
+例如：
+
+```js
+image.status = Image.STATUS.LOAD;
+```
+
+### Image.status
+
+同 image.status，但是针对全局设置，未设置的实例，会使用全局设置。
+
+```js
+Image.status = Image.STATUS.ERROR;
+```
+
+### image.responseTime
+
+设置图片请求的响应时间。整型数值，单位为毫秒(ms)。
+
+```js
+image.responseTime = 100;
+```
+
+### Image.responseTime
+
+设置全局的图片请求响应时间，同 image.responseTime。
+未设置的实例，会使用全局设置。
+如果同时未设置全局响应时间，则使用默认的响应时间 0ms，立即响应。
+
 ## Events
 
 对象使用 `on`, `off` 方法绑定、解绑事件，eventName 支持以下事件类型。
