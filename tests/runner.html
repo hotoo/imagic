@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Imagic Mocha Runner</title>
-    <link href="./static/css/mocha.css" type="text/css" rel="stylesheet" charset="utf-8">
+    <link href="../static/css/mocha.css" type="text/css" rel="stylesheet" charset="utf-8">
   </head>
   <body>
 <script>
@@ -16,12 +16,12 @@
   ga('create', 'UA-50522089-2', 'spm documentation');
   ga('send', 'pageview');
 </script>
-<script src="http://static.alipayobjects.com/??seajs/seajs/2.2.0/sea.js,seajs/seajs-text/1.0.2/seajs-text.js"></script>
+<script src="http://static.alipayobjects.com/seajs/seajs/2.2.0/sea.js"></script>
 
 <script>
   (function() {
   seajs.config({
-    base: "./"
+    base: "../"
   });
 
   seajs.config({
@@ -29,7 +29,7 @@
   });
 })();
 </script>
-    <script src="./static/js/mocha.js?nowrap"></script>
+    <script src="../static/js/mocha.js?nowrap"></script>
     <div id="mocha"></div>
     <script>
       (function() {
@@ -42,17 +42,29 @@
           }
           return false;
         };
+        if (contain(query, 'cov')) {
+          if (console && console.log) {
+            console.log = function() {};
+          }
+        }
         seajs.config({
           map: [function(url) {
             if (!contain(query, 'cov')) {
               return url;
             }
             var sources = [''
-              ,'index.js'
+              ,'index'
             ];
+            var matcher = url.match('http:\/\/(.*?)\/(.*)');
+            var file;
+            if (matcher) {
+              file = matcher[2].replace(/\.js$/, '');
+            } else {
+              return url;
+            }
             sources = sources.slice(1);
             for (var i=0; i<sources.length; i++) {
-              if (url.indexOf(sources[i]) > 0) {
+              if (file === sources[i]) {
                 return url.replace(/\.js$/g, '-cov.js');
               }
             }
@@ -65,7 +77,7 @@
 
         var specs = [];
         for (var i = 0; i < tests.length; i++) {
-          specs[i] = './' + tests[i];
+          specs[i] = '../' + tests[i];
         }
 
         seajs.use(specs, function() {

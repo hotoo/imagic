@@ -1,6 +1,6 @@
 {
   "name": "imagic",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Imagic send data by image, for tests mock.",
   "homepage": "https://github.com/hotoo/imagic",
   "author": "闲耘<hotoo.cn@gmail.com>",
@@ -11,9 +11,7 @@
   "bugs": {
     "url": "https://github.com/hotoo/imagic/issues"
   },
-  "scripts": {
-  },
-  "keywords": ["utility"],
+  "keywords": ["Image", "test", "mock", "request", "response"],
   "licenses": "MIT",
   "spm": {
     "main": "index.js",

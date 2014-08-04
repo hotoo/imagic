@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>imagic - imagic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="nico 0.5.0" />
+    <meta name="generator" content="nico 0.5.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link type="image/x-icon" href="./static/css/favicon.ico" rel="icon">
     <link rel="stylesheet" href="./static/css/normalize.css" />
@@ -18,7 +18,7 @@
   ga('create', 'UA-50522089-2', 'spm documentation');
   ga('send', 'pageview');
 </script>
-<script src="http://static.alipayobjects.com/??seajs/seajs/2.2.0/sea.js,seajs/seajs-text/1.0.2/seajs-text.js"></script>
+<script src="http://static.alipayobjects.com/seajs/seajs/2.2.0/sea.js"></script>
 
 <script>
   (function() {
@@ -41,13 +41,13 @@
       <h1>
           <a href="./">Imagic</a>
       </h1>
-        <p class="sidebar-version">Version: <a href="http://spmjs.io/package/imagic" title="">1.1.0</a></p>
-        <p class="sidebar-description" data-keyword="utility">Imagic send data by image, for tests mock.</p>
+        <p class="sidebar-version">Version: <a href="http://spmjs.io/package/imagic" title="">1.1.1</a></p>
+        <p class="sidebar-description" data-keyword="Image">Imagic send data by image, for tests mock.</p>
         <a class="sidebar-source" href="http:////github.com/hotoo/imagic" target="_blank">View the Project</a>
         <ul class="sidebar-navigation" role="navigation">
           <li><a href="./">Doc</a></li>
           <li><a href="examples/">Demo</a></li>
-          <li><a class="test-link" href="tests-runner.html" target="_blank">Test</a></li>
+          <li><a class="test-link" href="tests/runner.html" target="_blank">Test</a></li>
           <li><a class="issue-link" href="https://github.com/hotoo/imagic/issues" target="_blank">Issues</a></li>
         </ul>
         
@@ -58,7 +58,8 @@
 <article class="hentry">
   <h1 class="entry-title">imagic</h1>
   <div class="entry-content">
-    <p><a href="https://travis-ci.org/hotoo/imagic"><img src="https://secure.travis-ci.org/hotoo/imagic.png?branch=master" alt="Build Status"></a>
+    <p><a href="http://spmjs.io/package/imagic"><img src="http://spmjs.io/badge/imagic" alt="spm package"></a>
+<a href="https://travis-ci.org/hotoo/imagic"><img src="https://secure.travis-ci.org/hotoo/imagic.png?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/r/hotoo/imagic"><img src="https://coveralls.io/repos/hotoo/imagic/badge.png?branch=master" alt="Coverage Status"></a></p>
 <p>Imagic send data by image, for tests mock.</p>
 <hr>
@@ -121,6 +122,18 @@
 <p>可以通过设置 <code>status</code> 为 <code>Image.STATUS.ABORT</code> 模拟。</p>
 <h3 id="image-on-eventname-handler">image.on(eventName, handler)<a href="#image-on-eventname-handler" class="anchor">¶</a></h3><p>指定事件监听方法。</p>
 <h3 id="image-off-eventname-handler">image.off(eventName, handler)<a href="#image-off-eventname-handler" class="anchor">¶</a></h3><p>取消事件监听方法。</p>
+<h3 id="image-status">image.status<a href="#image-status" class="anchor">¶</a></h3><p>可以使用 Image.STATUS 的枚举值：</p>
+<ul>
+<li><code>Image.STATUS.LOAD</code>：测试图片加载成功时，使用这个状态。会触发 load 事件，调用 onload 方法。</li>
+<li><code>Image.STATUS.ERROR</code>：测试图片加载失败时，使用这个状态，会触发 error 事件，调用 onerror 方法。</li>
+<li><code>Image.STATUS.ABORT</code>：测试图片请求取消时，使用这个状态，会触发 abort 事件，调用 onabort 方法。</li>
+</ul>
+<p>例如：</p>
+<div class="highlight"><pre><code class="javascript">image.status = Image.STATUS.LOAD;</code></pre></div><h3 id="image-status">Image.status<a href="#image-status" class="anchor">¶</a></h3><p>同 image.status，但是针对全局设置，未设置的实例，会使用全局设置。</p>
+<div class="highlight"><pre><code class="javascript">Image.status = Image.STATUS.ERROR;</code></pre></div><h3 id="image-responsetime">image.responseTime<a href="#image-responsetime" class="anchor">¶</a></h3><p>设置图片请求的响应时间。整型数值，单位为毫秒(ms)。</p>
+<div class="highlight"><pre><code class="javascript">image.responseTime = <span class="number">100</span>;</code></pre></div><h3 id="image-responsetime">Image.responseTime<a href="#image-responsetime" class="anchor">¶</a></h3><p>设置全局的图片请求响应时间，同 image.responseTime。
+未设置的实例，会使用全局设置。
+如果同时未设置全局响应时间，则使用默认的响应时间 0ms，立即响应。</p>
 <h2 id="events">Events<a href="#events" class="anchor">¶</a></h2><p>对象使用 <code>on</code>, <code>off</code> 方法绑定、解绑事件，eventName 支持以下事件类型。</p>
 <h3 id="fetch">fetch<a href="#fetch" class="anchor">¶</a></h3><p>模拟发起资源请求前，触发 <code>fetch</code> 事件，事件处理函数携带 <code>src</code> 参数。</p>
 <h3 id="load">load<a href="#load" class="anchor">¶</a></h3><p>模拟请求资源成功时，触发 <code>load</code> 事件。</p>
