@@ -13,7 +13,7 @@ var Events = require("arale-events");
 var EVT = new Events();
 function empty(){}
 
-var LOAD_TIME = 50;
+var DEFAULT_RESPONSE_TIME = 0;
 var DEFAULT_STATE = "load";
 
 var Image = function(width, height){
@@ -47,7 +47,7 @@ var Image = function(width, height){
 
         me["on"+status].call(me);
 
-      }, this.loadTime || LOAD_TIME);
+      }, this.responseTime || Image.responseTime || DEFAULT_RESPONSE_TIME);
     },
     get: function(){
       return src;
