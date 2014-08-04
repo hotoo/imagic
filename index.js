@@ -74,11 +74,9 @@ Image.prototype = {
 Image.STATUS = {
   LOAD: "load",
   ERROR: "error",
-  ABORT: "abort",
-  NULL: ""
+  ABORT: "abort"
 };
 
-Image.status = Image.STATUS.NULL;
 
 Image.on = function(eventName, handler){
   EVT.on(eventName, handler, Image);
