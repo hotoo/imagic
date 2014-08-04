@@ -82,19 +82,15 @@ seajs.use(["imagic", "tracker"], function(Image, Tracker){
 
 全局的模拟图像事件解除监听接口。
 
-### Image.status
+### image.on(eventName, handler)
 
-全局模拟图像状态标识，`Image.STATUS` 枚举类型，可选值如下：
-设置这个成员属性，可以指定 Image 的请求返回状态。
-默认是 `Image.STATUS.LOAD` 状态。
+指定事件监听方法。
 
-* `Image.STATUS.LOAD`
-* `Image.STATUS.ERROR`
-* `Image.STATUS.ABORT`
+### image.off(eventName, handler)
 
-### image.status
+取消事件监听方法。
 
-特定模拟图像实例的状态，同 `Image.status`。
+
 
 ### image.src
 
@@ -116,17 +112,13 @@ seajs.use(["imagic", "tracker"], function(Image, Tracker){
 
 可以通过设置 `status` 为 `Image.STATUS.ABORT` 模拟。
 
-### image.on(eventName, handler)
 
-指定事件监听方法。
 
-### image.off(eventName, handler)
+### Image.status
 
-取消事件监听方法。
-
-### image.status
-
-可以使用 Image.STATUS 的枚举值：
+全局模拟图像状态标识，`Image.STATUS` 枚举类型，可选值如下：
+设置这个成员属性，可以指定 Image 的请求返回状态。
+默认是 `Image.STATUS.LOAD` 状态。
 
 * `Image.STATUS.LOAD`：测试图片加载成功时，使用这个状态。会触发 load 事件，调用 onload 方法。
 * `Image.STATUS.ERROR`：测试图片加载失败时，使用这个状态，会触发 error 事件，调用 onerror 方法。
@@ -135,30 +127,39 @@ seajs.use(["imagic", "tracker"], function(Image, Tracker){
 例如：
 
 ```js
-image.status = Image.STATUS.LOAD;
-```
-
-### Image.status
-
-同 image.status，但是针对全局设置，未设置的实例，会使用全局设置。
-
-```js
 Image.status = Image.STATUS.ERROR;
 ```
 
-### image.responseTime
+### image.status
 
-设置图片请求的响应时间。整型数值，单位为毫秒(ms)。
+特定模拟图像实例的状态，同 `Image.status`。
+
+例如：
 
 ```js
-image.responseTime = 100;
+image.status = Image.STATUS.LOAD;
 ```
 
 ### Image.responseTime
 
-设置全局的图片请求响应时间，同 image.responseTime。
+设置全局的图片请求响应时间，整型数值，单位为毫秒(ms)。
 未设置的实例，会使用全局设置。
 如果同时未设置全局响应时间，则使用默认的响应时间 0ms，立即响应。
+
+例如：
+
+```js
+Image.responseTime = 50;
+```
+
+### image.responseTime
+
+设置图片请求的响应时间。同 `Image.responseTime`。
+
+```js
+var image = new Image(1,1);
+image.responseTime = 100;
+```
 
 ## Events
 
