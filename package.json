@@ -11,9 +11,7 @@
   "bugs": {
     "url": "https://github.com/hotoo/imagic/issues"
   },
-  "scripts": {
-  },
-  "keywords": ["utility"],
+  "keywords": ["Image", "test", "mock", "request", "response"],
   "licenses": "MIT",
   "spm": {
     "main": "index.js",
