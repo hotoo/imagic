@@ -9,6 +9,8 @@ if(typeof Object.defineProperty !== "function"){
 }
 
 var Events = require("arale-events");
+
+var EVT = new Events();
 function empty(){}
 
 var LOAD_TIME = 50;
@@ -20,7 +22,6 @@ var Image = function(width, height){
   this.height = height;
   var src;
 
-  this.status = DEFAULT_STATE;
   this._evt = new Events();
 
   Object.defineProperty(this, "src", {
@@ -34,7 +35,12 @@ var Image = function(width, height){
       var me = this;
       setTimeout(function(){
 
-        var status = Image.status || me.status;
+        var status;
+        if (me.hasOwnProperty("status")){
+          status = me.status;
+        } else {
+          status = Image.status || DEFAULT_STATE;
+        }
 
         me._evt.trigger(status);
         EVT.trigger(status, src);
@@ -51,6 +57,7 @@ var Image = function(width, height){
 };
 
 Image.prototype = {
+  status: DEFAULT_STATE,
   onload: empty,
   onerror: empty,
   onabort: empty,
@@ -71,9 +78,8 @@ Image.STATUS = {
   NULL: ""
 };
 
-Image.status = "";
+Image.status = Image.STATUS.NULL;
 
-var EVT = new Events();
 Image.on = function(eventName, handler){
   EVT.on(eventName, handler, Image);
   return this;
