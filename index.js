@@ -97,15 +97,15 @@ Image.off = function(eventName, handler){
 var doc = document;
 var createElement = doc.createElement;
 
-HTMLElement.prototype.status = DEFAULT_STATE;
-HTMLElement.prototype.onload = empty;
-HTMLElement.prototype.onerror = empty;
-HTMLElement.prototype.onabort = empty;
-HTMLElement.prototype.on = function(eventName, handler){
+HTMLImageElement.prototype.status = DEFAULT_STATE;
+HTMLImageElement.prototype.onload = empty;
+HTMLImageElement.prototype.onerror = empty;
+HTMLImageElement.prototype.onabort = empty;
+HTMLImageElement.prototype.on = function(eventName, handler){
   this._evt.on(eventName, handler, this);
   return this;
 };
-HTMLElement.prototype.off = function(eventName, handler){
+HTMLImageElement.prototype.off = function(eventName, handler){
   this._evt.off(eventName, handler, this);
   return this;
 };
