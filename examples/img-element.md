@@ -1,11 +1,11 @@
-# Demo: new Image()
+# Demo: createElement("img")
 
----
+----
 
 ````javascript
 seajs.use('../index', function(Image){
 
-  var img = new Image(1,1);
+  var img = document.createElement("img");
   img.onload = function(){
     console.log("loaded", this.src);
   };

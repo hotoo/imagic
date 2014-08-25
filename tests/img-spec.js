@@ -4,11 +4,11 @@ var Image = require('../index');
 
 var URL = "http://www.google.com/logo.png";
 
-describe('new Image()', function() {
+describe('document.createElement("img")', function() {
 
   it('Event fetch: '+URL, function() {
 
-    var img = new Image(1,1);
+    var img = document.createElement("img");
 
     img.on("fetch", function(src){
       expect(src).to.equal(URL);
@@ -20,7 +20,7 @@ describe('new Image()', function() {
   });
 
   it('Event load: '+URL, function(done){
-    var img = new Image();
+    var img = document.createElement("img");
     img.on("load", function(){
       expect(this.src).to.equal(URL);
       done();
@@ -29,7 +29,7 @@ describe('new Image()', function() {
   });
 
   it('Event error: '+URL, function(done){
-    var img = new Image();
+    var img = document.createElement("img");
     img.status = Image.STATUS.ERROR;
     img.on("error", function(){
       expect(this.src).to.equal(URL);
@@ -39,7 +39,7 @@ describe('new Image()', function() {
   });
 
   it('Event abort: '+URL, function(done){
-    var img = new Image();
+    var img = document.createElement("img");
     img.status = Image.STATUS.ABORT;
     img.on("abort", function(){
       expect(this.src).to.equal(URL);
@@ -49,7 +49,7 @@ describe('new Image()', function() {
   });
 
   it('onload: '+URL, function(done){
-    var img = new Image();
+    var img = document.createElement("img");
     img.status = Image.STATUS.LOAD;
     img.onload = function(){
       expect(this.src).to.equal(URL);
@@ -59,7 +59,7 @@ describe('new Image()', function() {
   });
 
   it('onerror: '+URL, function(done){
-    var img = new Image();
+    var img = document.createElement("img");
     img.status = Image.STATUS.ERROR;
     img.onerror = function(){
       expect(this.src).to.equal(URL);
@@ -69,7 +69,7 @@ describe('new Image()', function() {
   });
 
   it('onabort: '+URL, function(done){
-    var img = new Image();
+    var img = document.createElement("img");
     img.status = Image.STATUS.ABORT;
     img.onabort = function(){
       expect(this.src).to.equal(URL);
@@ -92,7 +92,7 @@ describe('new Image()', function() {
   });
 
   it('Global Image Event load: '+URL, function(done){
-    var img = new Image();
+    var img = document.createElement("img");
 
     Image.on("load", function(src){
       expect(src).to.equal(URL);
@@ -104,7 +104,7 @@ describe('new Image()', function() {
   });
 
   it('Global Image Event error: '+URL, function(done){
-    var img = new Image();
+    var img = document.createElement("img");
 
     Image.status = Image.STATUS.ERROR;
     Image.on("error", function(src){
@@ -121,7 +121,7 @@ describe('new Image()', function() {
   });
 
   it('Global Image Event abort: '+URL, function(done){
-    var img = new Image();
+    var img = document.createElement("img");
 
     Image.status = Image.STATUS.ABORT;
     Image.on("abort", function(src){
