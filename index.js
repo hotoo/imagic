@@ -16,48 +16,53 @@ function empty(){}
 var DEFAULT_RESPONSE_TIME = 0;
 var DEFAULT_STATE = "load";
 
-function defineProperty(context, property, val, evt){
-  Object.defineProperty(context, property, {
-    set: function(value){
 
-      evt.trigger("fetch", value);
-      EVT.trigger("fetch", value);
+function setter(value){
 
-      val = value;
+  var evt = this._evt;
+  var context = this;
 
-      setTimeout(function(){
+  evt.trigger("fetch", value);
+  EVT.trigger("fetch", value);
 
-        var status;
-        if (context.hasOwnProperty("status")){
-          status = context.status;
-        } else {
-          status = Image.status || DEFAULT_STATE;
-        }
+  this._src = value;
 
-        evt.trigger(status);
-        EVT.trigger(status, val);
+  setTimeout(function(){
 
-        try {
-          context["on"+status].call(context);
-        } catch (ex) {}
-
-      }, context.responseTime || Image.responseTime || DEFAULT_RESPONSE_TIME);
-    },
-    get: function(){
-      return val;
+    var status;
+    if (context.hasOwnProperty("status")){
+      status = context.status;
+    } else {
+      status = Image.status || DEFAULT_STATE;
     }
-  });
+
+    evt.trigger(status);
+    EVT.trigger(status, context._src);
+
+    try {
+      context["on"+status].call(context);
+    } catch (ex) {}
+
+  }, context.responseTime || Image.responseTime || DEFAULT_RESPONSE_TIME);
 }
+
+function getter(){
+  return this._src;
+}
+
 
 var Image = function(width, height){
 
   this.width = width;
   this.height = height;
-  var src;
+  this._src;
 
   this._evt = new Events();
 
-  defineProperty(this, "src", src, this._evt);
+  Object.defineProperty(this, "src", {
+    set: setter,
+    get: getter
+  });
 
 };
 
@@ -118,7 +123,8 @@ doc.createElement = function(tagName){
   if (tagName && (tagName = String(tagName).toUpperCase()) === "IMG") {
 
     element._evt = new Events();
-    defineProperty(element, "src", src, element._evt);
+    element.__defineSetter__("src", setter);
+    element.__defineGetter__("src", getter);
 
   }
 
