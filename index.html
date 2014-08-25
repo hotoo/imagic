@@ -11,25 +11,23 @@
     <link rel="stylesheet" href="./static/css/site.css" />
     <link rel="stylesheet" href="./static/css/solarized.css" />
 <script>
+if (!location.port) {
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-50522089-2', 'spm documentation');
   ga('send', 'pageview');
+}
 </script>
+
 <script src="http://static.alipayobjects.com/seajs/seajs/2.2.0/sea.js"></script>
 
 <script>
-  (function() {
   seajs.config({
-    base: "./"
-  });
-
-  seajs.config({
+    base: "./",
     alias: {"arale-events":"sea-modules/arale-events/1.2.0/events.js","expect.js":"sea-modules/expect.js/0.3.1/index.js"}
   });
-})();
 </script>
     <!--[if lt IE 9]>
     <script src="./static/js/html5shiv.js"></script>
@@ -41,7 +39,7 @@
       <h1>
           <a href="./">Imagic</a>
       </h1>
-        <p class="sidebar-version">Version: <a href="http://spmjs.io/package/imagic" title="">1.1.1</a></p>
+        <p class="sidebar-version">Version: <a href="http://spmjs.io/package/imagic" title="">1.2.0</a></p>
         <p class="sidebar-description" data-keyword="Image">Imagic send data by image, for tests mock.</p>
         <a class="sidebar-source" href="http:////github.com/hotoo/imagic" target="_blank">View the Project</a>
         <ul class="sidebar-navigation" role="navigation">
@@ -105,36 +103,32 @@
 所有的模拟图像实例触发的事件，全局图像都会同时触发同样的事件。</p>
 <p>事件处理函数 handler 的参数是 src 值。</p>
 <h3 id="image-off-eventname-handler">Image.off(eventName, handler)<a href="#image-off-eventname-handler" class="anchor">¶</a></h3><p>全局的模拟图像事件解除监听接口。</p>
-<h3 id="image-status">Image.status<a href="#image-status" class="anchor">¶</a></h3><p>全局模拟图像状态标识，<code>Image.STATUS</code> 枚举类型，可选值如下：
-设置这个成员属性，可以指定 Image 的请求返回状态。
-默认是 <code>Image.STATUS.LOAD</code> 状态。</p>
-<ul>
-<li><code>Image.STATUS.LOAD</code></li>
-<li><code>Image.STATUS.ERROR</code></li>
-<li><code>Image.STATUS.ABORT</code></li>
-</ul>
-<h3 id="image-status">image.status<a href="#image-status" class="anchor">¶</a></h3><p>特定模拟图像实例的状态，同 <code>Image.status</code>。</p>
+<h3 id="image-on-eventname-handler">image.on(eventName, handler)<a href="#image-on-eventname-handler" class="anchor">¶</a></h3><p>指定事件监听方法。</p>
+<h3 id="image-off-eventname-handler">image.off(eventName, handler)<a href="#image-off-eventname-handler" class="anchor">¶</a></h3><p>取消事件监听方法。</p>
 <h3 id="image-src">image.src<a href="#image-src" class="anchor">¶</a></h3><p>字符串(String) 类型，修改 src 成员的值时，模拟发起资源请求。</p>
 <h3 id="image-onload">image.onload<a href="#image-onload" class="anchor">¶</a></h3><p>模拟请求图片资源成功时，回调 <code>onload</code> 方法。</p>
 <h3 id="image-onerror">image.onerror<a href="#image-onerror" class="anchor">¶</a></h3><p>模拟请求图片资源失败时，回调 <code>onerror</code> 方法。</p>
 <p>可以通过设置 <code>status</code> 为 <code>Image.STATUS.ERROR</code> 模拟。</p>
 <h3 id="image-onabort">image.onabort<a href="#image-onabort" class="anchor">¶</a></h3><p>模拟图片资源请求取消时，回调 <code>onabort</code> 方法。</p>
 <p>可以通过设置 <code>status</code> 为 <code>Image.STATUS.ABORT</code> 模拟。</p>
-<h3 id="image-on-eventname-handler">image.on(eventName, handler)<a href="#image-on-eventname-handler" class="anchor">¶</a></h3><p>指定事件监听方法。</p>
-<h3 id="image-off-eventname-handler">image.off(eventName, handler)<a href="#image-off-eventname-handler" class="anchor">¶</a></h3><p>取消事件监听方法。</p>
-<h3 id="image-status">image.status<a href="#image-status" class="anchor">¶</a></h3><p>可以使用 Image.STATUS 的枚举值：</p>
+<h3 id="image-status">Image.status<a href="#image-status" class="anchor">¶</a></h3><p>全局模拟图像状态标识，<code>Image.STATUS</code> 枚举类型，可选值如下：
+设置这个成员属性，可以指定 Image 的请求返回状态。
+默认是 <code>Image.STATUS.LOAD</code> 状态。</p>
 <ul>
 <li><code>Image.STATUS.LOAD</code>：测试图片加载成功时，使用这个状态。会触发 load 事件，调用 onload 方法。</li>
 <li><code>Image.STATUS.ERROR</code>：测试图片加载失败时，使用这个状态，会触发 error 事件，调用 onerror 方法。</li>
 <li><code>Image.STATUS.ABORT</code>：测试图片请求取消时，使用这个状态，会触发 abort 事件，调用 onabort 方法。</li>
 </ul>
 <p>例如：</p>
-<div class="highlight"><pre><code class="javascript">image.status = Image.STATUS.LOAD;</code></pre></div><h3 id="image-status">Image.status<a href="#image-status" class="anchor">¶</a></h3><p>同 image.status，但是针对全局设置，未设置的实例，会使用全局设置。</p>
-<div class="highlight"><pre><code class="javascript">Image.status = Image.STATUS.ERROR;</code></pre></div><h3 id="image-responsetime">image.responseTime<a href="#image-responsetime" class="anchor">¶</a></h3><p>设置图片请求的响应时间。整型数值，单位为毫秒(ms)。</p>
-<div class="highlight"><pre><code class="javascript">image.responseTime = <span class="number">100</span>;</code></pre></div><h3 id="image-responsetime">Image.responseTime<a href="#image-responsetime" class="anchor">¶</a></h3><p>设置全局的图片请求响应时间，同 image.responseTime。
+<div class="highlight"><pre><code class="javascript">Image.status = Image.STATUS.ERROR;</code></pre></div><h3 id="image-status">image.status<a href="#image-status" class="anchor">¶</a></h3><p>特定模拟图像实例的状态，同 <code>Image.status</code>。</p>
+<p>例如：</p>
+<div class="highlight"><pre><code class="javascript">image.status = Image.STATUS.LOAD;</code></pre></div><h3 id="image-responsetime">Image.responseTime<a href="#image-responsetime" class="anchor">¶</a></h3><p>设置全局的图片请求响应时间，整型数值，单位为毫秒(ms)。
 未设置的实例，会使用全局设置。
 如果同时未设置全局响应时间，则使用默认的响应时间 0ms，立即响应。</p>
-<h2 id="events">Events<a href="#events" class="anchor">¶</a></h2><p>对象使用 <code>on</code>, <code>off</code> 方法绑定、解绑事件，eventName 支持以下事件类型。</p>
+<p>例如：</p>
+<div class="highlight"><pre><code class="javascript">Image.responseTime = <span class="number">50</span>;</code></pre></div><h3 id="image-responsetime">image.responseTime<a href="#image-responsetime" class="anchor">¶</a></h3><p>设置图片请求的响应时间。同 <code>Image.responseTime</code>。</p>
+<div class="highlight"><pre><code class="javascript"><span class="keyword">var</span> image = <span class="keyword">new</span> Image(<span class="number">1</span>,<span class="number">1</span>);
+image.responseTime = <span class="number">100</span>;</code></pre></div><h2 id="events">Events<a href="#events" class="anchor">¶</a></h2><p>对象使用 <code>on</code>, <code>off</code> 方法绑定、解绑事件，eventName 支持以下事件类型。</p>
 <h3 id="fetch">fetch<a href="#fetch" class="anchor">¶</a></h3><p>模拟发起资源请求前，触发 <code>fetch</code> 事件，事件处理函数携带 <code>src</code> 参数。</p>
 <h3 id="load">load<a href="#load" class="anchor">¶</a></h3><p>模拟请求资源成功时，触发 <code>load</code> 事件。</p>
 <h3 id="error">error<a href="#error" class="anchor">¶</a></h3><p>模拟请求资源成功时，触发 <code>error</code> 事件。</p>
@@ -156,4 +150,9 @@
       </footer>
     </div>
   </body>
+  <script src="./static/js/nprogress.js?nowrap"></script>
+  <script>
+  NProgress.start();
+  window.onload = NProgress.done;
+  </script>
 </html>

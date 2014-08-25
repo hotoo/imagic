@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>imagic - Demo: new Image()</title>
+    <title>imagic - Demo: createElement(&quot;img&quot;)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="nico 0.5.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,11 +58,11 @@ if (!location.port) {
       <div class="content-wrapper">
         
 <article class="hentry">
-  <h1 class="entry-title">Demo: new Image()</h1>
+  <h1 class="entry-title">Demo: createElement(&quot;img&quot;)</h1>
   <div class="entry-content">
     <script>seajs.use('../index', function(Image){
 
-  var img = new Image(1,1);
+  var img = document.createElement("img");
   img.onload = function(){
     console.log("loaded", this.src);
   };
@@ -87,7 +87,7 @@ if (!location.port) {
 
 });</script><div class="highlight"><pre><code class="javascript">seajs.use(<span class="string">'../index'</span>, <span class="function"><span class="keyword">function</span><span class="params">(Image)</span>{</span>
 
-  <span class="keyword">var</span> img = <span class="keyword">new</span> Image(<span class="number">1</span>,<span class="number">1</span>);
+  <span class="keyword">var</span> img = document.createElement(<span class="string">"img"</span>);
   img.onload = <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
     console.log(<span class="string">"loaded"</span>, <span class="keyword">this</span>.src);
   };

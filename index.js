@@ -16,51 +16,64 @@ function empty(){}
 var DEFAULT_RESPONSE_TIME = 0;
 var DEFAULT_STATE = "load";
 
+
+function setter(value){
+
+  var context = this;
+  var evt = context._evt;
+
+  context._evt.trigger("fetch", value);
+  EVT.trigger("fetch", value);
+
+  this._src_ = value;
+
+  setTimeout(function(){
+
+    var status;
+    if (context.hasOwnProperty("status")){
+      status = context.status;
+    } else {
+      status = Image.status || DEFAULT_STATE;
+    }
+
+    context._evt.trigger(status);
+    EVT.trigger(status, context._src_);
+
+    var onhandler = context["on"+status];
+    if (typeof onhandler === "function"){
+      onhandler.call(context);
+    } else { }
+
+  }, context.responseTime || Image.responseTime || DEFAULT_RESPONSE_TIME);
+
+}
+
+function getter(){
+  return this._src_;
+}
+
+
 var Image = function(width, height){
 
   this.width = width;
   this.height = height;
-  var src;
 
   this._evt = new Events();
 
   Object.defineProperty(this, "src", {
-    set: function(source){
-
-      this._evt.trigger("fetch", source);
-      EVT.trigger("fetch", source);
-
-      src = source;
-
-      var me = this;
-      setTimeout(function(){
-
-        var status;
-        if (me.hasOwnProperty("status")){
-          status = me.status;
-        } else {
-          status = Image.status || DEFAULT_STATE;
-        }
-
-        me._evt.trigger(status);
-        EVT.trigger(status, src);
-
-        me["on"+status].call(me);
-
-      }, this.responseTime || Image.responseTime || DEFAULT_RESPONSE_TIME);
-    },
-    get: function(){
-      return src;
-    }
+    set: setter,
+    get: getter
   });
 
 };
 
+Image.STATUS = {
+  LOAD: "load",
+  ERROR: "error",
+  ABORT: "abort"
+};
+
 Image.prototype = {
-  status: DEFAULT_STATE,
-  onload: empty,
-  onerror: empty,
-  onabort: empty,
   on: function(eventName, handler){
     this._evt.on(eventName, handler, this);
     return this;
@@ -71,14 +84,6 @@ Image.prototype = {
   }
 };
 
-Image.STATUS = {
-  LOAD: "load",
-  ERROR: "error",
-  ABORT: "abort",
-  NULL: ""
-};
-
-Image.status = Image.STATUS.NULL;
 
 Image.on = function(eventName, handler){
   EVT.on(eventName, handler, Image);
@@ -87,6 +92,37 @@ Image.on = function(eventName, handler){
 Image.off = function(eventName, handler){
   EVT.off(eventName, handler, Image);
   return this;
+};
+
+
+// document.createElement("img") support.
+var doc = document;
+var createElement = doc.createElement;
+
+HTMLImageElement.prototype.on = function(eventName, handler){
+  this._evt.on(eventName, handler, this);
+  return this;
+};
+HTMLImageElement.prototype.off = function(eventName, handler){
+  this._evt.off(eventName, handler, this);
+  return this;
+};
+
+doc.createElement = function(tagName){
+
+  var element = createElement.call(doc, tagName);
+  var src;
+
+  if (tagName && (tagName = String(tagName).toUpperCase()) === "IMG") {
+
+    element._evt = new Events();
+    element.__defineSetter__("src", setter);
+    element.__defineGetter__("src", getter);
+
+  }
+
+  return element;
+
 };
 
 window.Image = Image;
