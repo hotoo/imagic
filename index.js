@@ -87,5 +87,26 @@ Image.off = function(eventName, handler){
   return this;
 };
 
+
+// document.createElement("img") support.
+var doc = document;
+var createElement = doc.createElement;
+doc.createElement = function(tagName){
+
+  var element;
+
+  if (tagName && (tagName = String(tagName).toUpperCase()) === "IMG") {
+
+    element = new Image(1,1);
+
+  } else {
+    element = createElement.call(doc, tagName);
+  }
+
+  return element;
+
+};
+
+
 window.Image = Image;
 module.exports = Image;
