@@ -2,7 +2,8 @@
 var expect = require("expect.js");
 var Image = require('../index');
 
-var URL = "http://www.google.com/logo.png";
+var URL = "http://su.bdimg.com/static/superplus/img/logo_white_ee663702.png";
+
 
 describe('document.createElement("img")', function() {
 

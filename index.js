@@ -19,13 +19,13 @@ var DEFAULT_STATE = "load";
 
 function setter(value){
 
-  var evt = this._evt;
   var context = this;
+  var evt = context._evt;
 
-  evt.trigger("fetch", value);
+  context._evt.trigger("fetch", value);
   EVT.trigger("fetch", value);
 
-  this._src = value;
+  this._src_ = value;
 
   setTimeout(function(){
 
@@ -36,18 +36,20 @@ function setter(value){
       status = Image.status || DEFAULT_STATE;
     }
 
-    evt.trigger(status);
-    EVT.trigger(status, context._src);
+    context._evt.trigger(status);
+    EVT.trigger(status, context._src_);
 
-    try {
-      context["on"+status].call(context);
-    } catch (ex) {}
+    var onhandler = context["on"+status];
+    if (typeof onhandler === "function"){
+      onhandler.call(context);
+    } else { }
 
   }, context.responseTime || Image.responseTime || DEFAULT_RESPONSE_TIME);
+
 }
 
 function getter(){
-  return this._src;
+  return this._src_;
 }
 
 
@@ -55,7 +57,6 @@ var Image = function(width, height){
 
   this.width = width;
   this.height = height;
-  this._src;
 
   this._evt = new Events();
 
@@ -73,10 +74,6 @@ Image.STATUS = {
 };
 
 Image.prototype = {
-  status: DEFAULT_STATE,
-  onload: empty,
-  onerror: empty,
-  onabort: empty,
   on: function(eventName, handler){
     this._evt.on(eventName, handler, this);
     return this;
@@ -102,10 +99,6 @@ Image.off = function(eventName, handler){
 var doc = document;
 var createElement = doc.createElement;
 
-HTMLImageElement.prototype.status = DEFAULT_STATE;
-HTMLImageElement.prototype.onload = empty;
-HTMLImageElement.prototype.onerror = empty;
-HTMLImageElement.prototype.onabort = empty;
 HTMLImageElement.prototype.on = function(eventName, handler){
   this._evt.on(eventName, handler, this);
   return this;
