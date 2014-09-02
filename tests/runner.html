@@ -14,7 +14,7 @@ if (!location.port) {
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-50522089-2', 'spm documentation');
+  ga('create', 'UA-50522089-2', 'auto');
   ga('send', 'pageview');
 }
 </script>
@@ -24,7 +24,10 @@ if (!location.port) {
 <script>
   seajs.config({
     base: "../",
-    alias: {"arale-events":"sea-modules/arale-events/1.2.0/events.js","expect.js":"sea-modules/expect.js/0.3.1/index.js"}
+    paths: {
+      'jquery': 'http://static.alipayobjects.com/jquery'
+    },
+    alias: {"arale-events":"spm_modules/arale-events/1.2.0/events.js","expect.js":"spm_modules/expect.js/0.3.1/index.js"}
   });
 </script>
     <script src="../static/js/mocha.js?nowrap"></script>
@@ -72,7 +75,8 @@ if (!location.port) {
           }]
         });
 
-        mocha.setup('bdd');
+        mocha.ui('bdd');
+        mocha.reporter('html');
         var tests = ["tests/imagic-spec.js","tests/img-spec.js"];
 
         var specs = [];

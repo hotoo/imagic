@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="nico 0.5.1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link type="image/x-icon" href="./static/css/favicon.ico" rel="icon">
+    <link type="image/x-icon" href="/favicon.ico" rel="icon">
     <link rel="stylesheet" href="./static/css/normalize.css" />
     <link rel="stylesheet" href="./static/css/site.css" />
     <link rel="stylesheet" href="./static/css/solarized.css" />
@@ -16,7 +16,7 @@ if (!location.port) {
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-50522089-2', 'spm documentation');
+  ga('create', 'UA-50522089-2', 'auto');
   ga('send', 'pageview');
 }
 </script>
@@ -26,7 +26,10 @@ if (!location.port) {
 <script>
   seajs.config({
     base: "./",
-    alias: {"arale-events":"sea-modules/arale-events/1.2.0/events.js","expect.js":"sea-modules/expect.js/0.3.1/index.js"}
+    paths: {
+      'jquery': 'http://static.alipayobjects.com/jquery'
+    },
+    alias: {"arale-events":"spm_modules/arale-events/1.2.0/events.js","expect.js":"spm_modules/expect.js/0.3.1/index.js"}
   });
 </script>
     <!--[if lt IE 9]>
@@ -39,14 +42,14 @@ if (!location.port) {
       <h1>
           <a href="./">Imagic</a>
       </h1>
-        <p class="sidebar-version">Version: <a href="http://spmjs.io/package/imagic" title="">1.2.0</a></p>
+      <p class="sidebar-version">Version: <a href="http://spmjs.io/package/imagic" title="">1.3.0</a></p>
         <p class="sidebar-description" data-keyword="Image">Imagic send data by image, for tests mock.</p>
         <a class="sidebar-source" href="http:////github.com/hotoo/imagic" target="_blank">View the Project</a>
         <ul class="sidebar-navigation" role="navigation">
           <li><a href="./">Doc</a></li>
           <li><a href="examples/">Demo</a></li>
           <li><a class="test-link" href="tests/runner.html" target="_blank">Test</a></li>
-          <li><a class="issue-link" href="https://github.com/hotoo/imagic/issues" target="_blank">Issues</a></li>
+          <li><a class="issue-link" href="http:////github.com/hotoo/imagic/issues" target="_blank">Issues</a></li>
         </ul>
         
 
@@ -152,7 +155,20 @@ image.responseTime = <span class="number">100</span>;</code></pre></div><h2 id="
   </body>
   <script src="./static/js/nprogress.js?nowrap"></script>
   <script>
-  NProgress.start();
-  window.onload = NProgress.done;
+  (function() {
+    NProgress.start();
+    window.onload = NProgress.done;
+    var ready = function(fn) {
+      var doc = document;
+      if(doc.addEventListener) {
+        doc.addEventListener('DOMContentLoaded', fn, false);
+      } else {
+        doc.attachEvent('onreadystatechange', fn);
+      }
+    };
+    ready(function() {
+      NProgress.inc(0.6);
+    }, false);
+  })();
   </script>
 </html>
