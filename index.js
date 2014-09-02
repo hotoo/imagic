@@ -93,14 +93,61 @@ var doc = document;
 var createElement = doc.createElement;
 doc.createElement = function(tagName){
 
-  var element;
+  tagName = String(tagName).toUpperCase();
 
-  if (tagName && (tagName = String(tagName).toUpperCase()) === "IMG") {
+  var isImage = tagName === "IMG";
 
-    element = new Image(1,1);
+  var element = createElement.call(doc, isImage ? "XMB" : tagName);
 
-  } else {
-    element = createElement.call(doc, tagName);
+  if (isImage) {
+
+    var image = element._image = new Image(1,1);
+    element.on = function(eventName, handler){
+      image.on.call(image, eventName, handler);
+      return element;
+    };
+    element.off = function(eventName, handler){
+      image.off.call(image, eventName, handler);
+      return element;
+    };
+    //element.on = image.on.bind(image);
+    //element.off = image.off.bind(image);
+
+    element.__defineSetter__("src", function(value){
+      this._image.src = value;
+    });
+    element.__defineGetter__("src", function(value){
+      return this._image.src;
+    });
+
+    element.__defineSetter__("status", function(value){
+      this._image.status = value;
+    });
+    element.__defineGetter__("status", function(value){
+      return this._image.status;
+    });
+
+    element.__defineSetter__("onload", function(value){
+      this._image.onload = value;
+    });
+    element.__defineGetter__("onload", function(value){
+      return this._image.onload;
+    });
+
+    element.__defineSetter__("onerror", function(value){
+      this._image.onerror = value;
+    });
+    element.__defineGetter__("onerror", function(value){
+      return this._image.onerror;
+    });
+
+    element.__defineSetter__("onabort", function(value){
+      this._image.onabort = value;
+    });
+    element.__defineGetter__("onabort", function(value){
+      return this._image.onabort;
+    });
+
   }
 
   return element;
