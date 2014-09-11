@@ -105,7 +105,7 @@ doc.createElement = function(tagName){
 
   var isImage = tagName === "IMG";
 
-  var element = createElement.call(doc, isImage ? "XMB" : tagName);
+  var element = createElement.call(doc, isImage ? "I" : tagName);
 
   if (isImage) {
 
